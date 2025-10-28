@@ -29,7 +29,7 @@ foreach(explode("\n", $raw) as $line) {
         }
 
         $entry->body = [];
-        continue;bassett_2019
+        continue;
     }
 
     if(str_starts_with($line, '}')) {
