@@ -1,5 +1,5 @@
 {
-    "name": "leo/bibtex-formatter",
+    "name": "leonickl/bibtex-formatter",
     "description": "A simplistic BibTeX formatter in PHP",
     "type": "projecct",
     "authors": [
