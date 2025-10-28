@@ -1,0 +1,16 @@
+{
+    "name": "leo/bibtex-formatter",
+    "description": "A simplistic BibTeX formatter in PHP",
+    "type": "projecct",
+    "authors": [
+        {
+            "name": "Leo Nickl",
+            "email": "leol@leonickl.de"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=8.4"
+    },
+    "bin": ["format-bibtex"]
+}

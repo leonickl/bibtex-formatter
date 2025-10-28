@@ -1,0 +1,77 @@
+#!/usr/bin/env php
+<?php
+
+$file = @$argv[1];
+
+if(! $file) {
+    die("Enter file to be formatted\n");
+}
+
+$raw = @file_get_contents($file);
+
+if(! $raw) {
+    die("File '$file' not found\n");
+}
+
+$entries = [];
+$entry = (object)[];
+
+foreach(explode("\n", $raw) as $line) {
+    $line = trim($line);
+
+    if(str_starts_with($line, '@')) {
+        @[$type, $name] = explode('{', $line);
+
+        $entry->type = trim($type, " \n\r\t\v\x00@");
+
+        if($name) {
+            $entry->name = trim($name, " \n\r\t\v\x00,");
+        }
+
+        $entry->body = [];
+        continue;bassett_2019
+    }
+
+    if(str_starts_with($line, '}')) {
+        $entries[] = $entry;
+        $entry = (object)[];
+        continue;
+    }
+
+    @[$key, $value] = explode('=', $line, 2);
+
+    if(! $key && ! $value) {
+        continue;
+    }
+
+    if(! $value) {
+        if($entry->name) {
+            die("Do not set name twice");
+        }
+
+        $entry->name = $value;
+        continue;
+    }
+
+    $entry->body[trim($key)] = trim($value, " \n\r\t\v\x00,");
+}
+
+$res = '';
+
+foreach($entries as $entry) {
+    $res .= "@{$entry->type}{{$entry->name},\n";
+
+    $maxlen = max(array_map('strlen', array_keys($entry->body)));
+
+    foreach($entry->body as $key => $value) {
+        $key = $key.str_repeat(' ', $maxlen - strlen($key));
+
+        $res .= "    $key = $value,\n";
+    }
+
+    $res .= "}\n\n";
+}
+
+$res = substr($res, 0, -1);
+
+file_put_contents($file, $res);
