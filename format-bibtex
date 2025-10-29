@@ -56,6 +56,8 @@ foreach(explode("\n", $raw) as $line) {
     $entry->body[trim($key)] = trim($value, " \n\r\t\v\x00,");
 }
 
+usort($entries, fn($one, $two) => $one->name <=> $two->name);
+
 $res = '';
 
 foreach($entries as $entry) {
