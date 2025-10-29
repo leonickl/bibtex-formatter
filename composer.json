@@ -1,7 +1,7 @@
 {
     "name": "leonickl/bibtex-formatter",
     "description": "A simplistic BibTeX formatter in PHP",
-    "type": "projecct",
+    "type": "project",
     "authors": [
         {
             "name": "Leo Nickl",
