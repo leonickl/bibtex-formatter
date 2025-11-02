@@ -12,5 +12,8 @@
     "require": {
         "php": ">=8.4"
     },
-    "bin": ["format-bibtex"]
+    "bin": [
+        "format-bibtex",
+        "format-bibtex-io"
+    ]
 }
