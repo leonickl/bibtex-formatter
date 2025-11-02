@@ -195,17 +195,7 @@ class Parser
         return $this;
     }
 
-    public function dump()
-    {
-        var_dump($this->entries);
-    }
-
-    public function log()
-    {
-        echo implode("\n", $this->log);
-    }
-
-    public function print()
+    private function format()
     {
         $output = '';
 
@@ -226,19 +216,42 @@ class Parser
         return substr($output, 0, -1);
     }
 
+    public function dump()
+    {
+        var_dump($this->entries);
+    }
+
+    public function log()
+    {
+        echo implode("\n", $this->log);
+    }
+
+    public function print()
+    {
+        echo $this->format();
+    }
+
     public function save(string $file)
     {
-        file_put_contents($file, $this->print());
+        file_put_contents($file, $this->format());
     }
 }
 
 $file = @$argv[1];
 
 if(! $file) {
-    die("Enter file to be formatted\n");
+    die("Usage: format-bibtex literature.bib [--save|--print|--log|--dump]\n");
+}
+
+$option = ltrim(@$argv[2] ?? '--print', '-');
+
+if(! in_array($option, ['dump', 'log', 'print', 'save'])) {
+    throw new Exception('invalid option given. try dump, log, print, or save');
 }
 
 Parser::read($file)
     ->parse()
     ->sort()
-    ->save($file);
+    ->$option($file);
+
+echo "\n";
