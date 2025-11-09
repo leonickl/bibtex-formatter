@@ -102,6 +102,9 @@ class Parser
             }
 
             if($token === '}') {
+                if($this->property?->key && $this->property?->value) {
+                    $this->entry->body[] = $this->property;
+                }
                 $this->entries[] = $this->entry;
                 $this->entry = null;
                 $this->state = State::PARSING;
@@ -131,6 +134,9 @@ class Parser
             }
             
             if($token === '}') {
+                if($this->property?->key && $this->property?->value) {
+                    $this->entry->body[] = $this->property;
+                }
                 $this->entries[] = $this->entry;
                 $this->entry = null;
                 $this->state = State::PARSING;
