@@ -208,12 +208,13 @@ class Parser
         $output = '';
 
         foreach($this->entries as $entry) {
-            $output .= "@{$entry->type}{{$entry->name},\n";
+            $type = strtolower($entry->type);
+            $output .= "@{$type}{{$entry->name},\n";
 
             $maxlen = max(array_map(fn(object $property) => strlen($property->key), $entry->body));
 
             foreach($entry->body as $property) {
-                $key = $property->key.str_repeat(' ', $maxlen - strlen($property->key));
+                $key = strtolower($property->key).str_repeat(' ', $maxlen - strlen($property->key));
 
                 $output .= "    $key = $property->value,\n";
             }
